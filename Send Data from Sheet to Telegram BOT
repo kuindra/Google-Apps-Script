@@ -1,0 +1,32 @@
+function SendTelegram(){
+
+let Token =  "1860013558:AAG5n14IMTU63wBRw9NTmH7qg9ZWBOfVOVI";
+let shet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+let range_list=shet.getLastRow();
+let range_chattid=shet.getLastRow();
+let A1=shet.getRange("A"+range_list).getValue()
+let A2=shet.getRange("B"+range_list).getValue()
+let A3=shet.getRange("C"+range_list).getValue()
+let A4=shet.getRange("D"+range_list).getValue()
+let KIRIM=shet.getRange("E"+range_list).getDisplayValue()
+if(A1!=''&&A2!=''&&A3!=''&&A4!=''&&KIRIM!='send'){
+let fsms ='\nTime Stamp  :  '+A1+																	
+'\n\nEvent               :  '+A2+
+'\n\nSuhu                :  '+A3+
+'\n\nKelembaban  :  '+A4;
+Logger.log(fsms)
+    let payload = {
+          'method': 'sendMessage',
+          'chat_id': '-753373883',//ID GROUP
+          'text': fsms,
+          'parse_mode': 'HTML'
+        }     
+        let data = {
+          "method": "post",
+          "payload": payload
+        }       
+        UrlFetchApp.fetch('https://api.telegram.org/bot' + Token + '/', data);
+      shet.getRange("E"+range_list).setValue("send") }
+}
+
+
