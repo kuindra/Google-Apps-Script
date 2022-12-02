@@ -1,0 +1,38 @@
+//Code Program Kirim Respon dari Form ke Channel Telegram
+//Respon akan masuk ke channel jika ada yang mengisi form
+
+function FungsiKirimResponPKLkeTELEGRAM() {
+
+let Token =  "1860013558:AAG5n14IMTU63wBRw9NTmH7qg9ZWBOfVOVI";
+var ss = SpreadsheetApp.getActive();
+var shet = ss.getSheetByName("F Respon Permohonan Prakerin");  //nama Sheet
+  
+//let shet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+let range_list=shet.getLastRow();
+let range_chattid=shet.getLastRow();
+let A1=shet.getRange("A"+range_list).getValue()
+let A2=shet.getRange("B"+range_list).getValue()
+let A3=shet.getRange("K"+range_list).getValue()
+let A4=shet.getRange("G"+range_list).getValue()
+let KIRIM=shet.getRange("L"+range_list).getDisplayValue()
+if(A1!=''&&A2!=''&&A3!=''&&A4!=''&&KIRIM!='terkirim'){
+let fsms =
+'\n🔔🔔🔔🔔<b>ADA YANG DAFTAR PKL TUH</b>🔔🔔🔔🔔'+
+'\n<code>Time Stamp      : </code>'+A1+																	
+'\n<code>Nama Sekolah    : </code>'+A2+
+'\n<code>Jurusan         : </code>'+A3+
+'\n<code>Jum Siswa       : </code>'+A4+" orang";
+Logger.log(fsms)
+    let payload = {
+          'method': 'sendMessage',
+          'chat_id': '-1001600849902',//ID GROUP
+          'text': fsms,
+          'parse_mode': 'HTML'
+        }     
+        let data = {
+          "method": "post",
+          "payload": payload
+        }       
+        UrlFetchApp.fetch('https://api.telegram.org/bot' + Token + '/', data);
+      shet.getRange("L"+range_list).setValue("terkirim") }
+}
