@@ -1,0 +1,8 @@
+//Fungsi Clear data di Google Sheet
+
+function clearData() {
+  var ss = SpreadsheetApp.getActive();
+  var sheet = ss.getActiveSheet();
+  // Rows start at "2" -  delete of N rows (5000 baris)
+    sheet.deleteRows(2,8600);
+}
