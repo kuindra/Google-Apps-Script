@@ -1,0 +1,23 @@
+
+function token() {
+  var id_form=FormApp.openById("1XQsygdQyMWqGqylZ79gxsoAmKaCtPC-uTsqmazBVoEI");  //id form
+  var id_token=id_form.getItemById("1868117305").asTextItem();   //id TOKEN, pakai data--observe
+  var sheet_data=SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Token");
+    var ambil_data=sheet_data.getRange(2, 3).getValues(); //baris-kolom
+   
+   var textValidation = FormApp.createTextValidation()
+  .setHelpText('Maaf token salah')
+ 
+ .requireTextContainsPattern(ambil_data)
+  .build();
+
+id_token.setValidation(textValidation);
+
+}
+
+
+function onedit(){
+token();
+}
+
+//Source by www.javabitpro.com
