@@ -1,0 +1,25 @@
+//UPDATE TOKEN KE FORM
+//https://script.google.com/home/projects/1zwHkmyUs8kkf8Pi_cn6UOfzsc9TgIhMPqnriyOPpGkTjaSLdrHhlE9w9/edit
+
+
+function UpdateToken() {
+  var id_form=FormApp.openById("1hc0fMOmvhQD0tmN-POy5Q8EAEjE2_fcY6U1GOqDWo9c");
+  var id_token=id_form.getItemById("239768435").asTextItem();
+  var sheet_data=SpreadsheetApp.getActiveSpreadsheet().getSheetByName("TOKEN");
+    var ambil_data=sheet_data.getRange(1,13).getValues();
+   
+   var textValidation = FormApp.createTextValidation()
+  .setHelpText('Maaf token salah')
+ 
+ .requireTextContainsPattern(ambil_data)
+  .build();
+
+id_token.setValidation(textValidation);
+
+}
+
+
+function onedit(){
+UpdateToken();
+}
+
