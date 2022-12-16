@@ -1,0 +1,41 @@
+function openUrl(url){
+ 
+ 
+const blob = `
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+    <link rel="stylesheet" href="https://ssl.gstatic.com/docs/script/css/add-ons1.css">
+  </head>
+  
+  <body>
+  <div id="blocked" hidden>
+    <p><a href="${url}"onclick="window.open(this.href)" rel="nofollow noopener">Klik disini untuk membuka Link! \>\></a></p>
+    <p>Menu ini akan mengarahkan ke Google Spreadsheet Hasil Tes TPA.</p>
+    <button onclick="google.script.host.close()">Tutup</button>
+  </div>
+ 
+    <script>
+      
+      const urlLinked = window.open("${url}");
+      if(urlLinked){
+        google.script.host.close()
+      }else{
+        document.getElementById("blocked").hidden = false;
+      }
+    
+    </script>
+  </body>
+</html>
+`
+ 
+ 
+  const html = HtmlService.createHtmlOutput(blob)
+    .setWidth(400)
+    .setHeight(200);
+ 
+const ui = SpreadsheetApp.getUi();
+  
+   ui.showModalDialog(html,"Membuka Sheet TPA")
+};
