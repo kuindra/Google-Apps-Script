@@ -1,0 +1,15 @@
+/*
+Untuk Membuat TOMBOL KIRIM DI SHEET
+Hanya Untuk pengiriman NIM
+https://docs.google.com/spreadsheets/d/11KmGOByyl0OtaF4pN855UVTSNBTclmAnN0cbp4CU94c/edit#gid=1609851356
+*/
+
+function onOpen() {
+  
+  SpreadsheetApp.getUi()
+  .createMenu('⚙️ Kelola Administrasi')
+  .addItem('Kirim Pesan (Pastikan Pada Sheet REG WA)', 'sendWhatsapp') // label for menu item, name of function to run.
+  .addItem('Buka Tes TPA', 'OpenWeb') // label for menu item, name of function to run.
+  .addToUi();  
+  
+}
