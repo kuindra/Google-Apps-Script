@@ -1,0 +1,60 @@
+function sendWhatsapp() {
+
+  var sheet = SpreadsheetApp.getActive().getSheetByName('REG WA')
+
+  var startRow = 2;  // First row of data to process - 2 exempts my header row
+  var numRows = sheet.getLastRow();   // Number of rows to process
+  var numColumns = sheet.getLastColumn();
+  var dataRange = sheet.getRange(startRow, 1, numRows-1, numColumns); 
+  var data = dataRange.getValues();
+
+  let range_list=sheet.getLastRow();
+
+  var TokenWhatsap = "CRqz86mrrnjejf1sQHTc0ZwBhIP1Kg9EGHYACrjvAn54ypQsvGblmHLWQGWnysD8";
+  var url = "https://jogja.wablas.com/api/send-message"
+
+
+ //data.forEach(function (row) {
+ for (var i = 0; i < data.length; ++i) {
+    var row = data[i];
+    var No_daftar =     row[3]; 
+    var NIM =     row[4];  
+    var Nama =  row[5];
+    var Prodi = row[9];
+    var email = row[12]; 
+    var NoWA = row[13];
+    //var message =      row[4];
+    //sheet.getRange("E2:E").setValue("terkirim");
+
+  
+  let fsms =
+  '\n*_INI ADALAH PESAN OTOMATIS_*'+
+  '\n_Mohon tidak membalas pesan ini_'+
+  '\n=================================='+
+  '\n\nTerima kasih telah mempercayakan Universitas Teknologi Digital Indonesia (UTDI) sebagai investasi masa depan.'+
+  '\n\nSaudara/i *'+Nama+'*, Saat ini anda telah menjadi Mahasiswa di UTDI untuk Program Studi *'+Prodi+'*, dengan Nomor Induk Mahasiswa (NIM) *'+NIM+'*'+
+  '\n\nInformasi ini juga telah kami kirimkan via email di alamat '+email+'. Silakan periksa kotak masuk email anda untuk informasi lebih lengkap.'+
+  '\n\nTerima Kasih'+
+  '\n------------'+
+  '\nAdmin UTDI';																
+  
+  //sheet.getRange("O"+range_list).setValue("NIM Terkirim");
+
+
+  var options_user ={
+      "method" : "post",
+      "headers" : { 
+      "Authorization": TokenWhatsap
+    }, 
+    "payload": {
+      "phone" : NoWA,
+      "message": fsms,
+    }
+  
+  };
+  var response = UrlFetchApp.fetch(url,options_user);
+  Logger.log(response.getContentText());
+  sheet.getRange("O"+range_list).setValue("NIM Terkirim");
+
+}
+}
