@@ -1,0 +1,41 @@
+function orgIP(ip) {
+  var url = "http://ipinfo.io/"+ ip +"?token=12f70b0a35a87f";
+  var response = UrlFetchApp.fetch(url);
+  var json = JSON.parse(response.getContentText());
+  return json.org;
+}
+
+function cekIP() {
+  var url = "http://api.ipify.org/?format=json";
+  var response = UrlFetchApp.fetch(url);
+  var json = JSON.parse(response.getContentText());
+  return json.ip;
+}
+
+function doGet(request) {
+  var template = HtmlService.createTemplateFromFile('Index')
+  var pageData = template.evaluate()
+  .setTitle("Form")
+  .addMetaTag("viewport","width=device-width, initial-scale=1")
+  .setSandboxMode(HtmlService.SandboxMode.IFRAME)
+  .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL)
+  return pageData;
+}
+
+/* @Include JavaScript and CSS Files */
+function include() {
+  var HTMLString = "<input type='text' class='form-control' id='ip' value='"+ cekIP() +"' readonly>";
+  HTMLOutput = HtmlService.createHtmlOutput(HTMLString);
+  return HTMLOutput.getContent();
+}
+ 
+/* @Process */
+function processForm(x,y,z) {
+  var url = "https://docs.google.com/spreadsheets/d/1hRI2rixQUG3ntUitxxCmOMXLinfIbbtIUpHVc0rBGmc/edit?resourcekey=undefined#gid=596946870";
+  var ss = SpreadsheetApp.openByUrl(url);
+  var ws = ss.getSheetByName("Info Lokasi");
+  var lokasi = Maps.newGeocoder().reverseGeocode(y, z);
+  alamat= lokasi.results[0].formatted_address;
+  
+  ws.appendRow([x,cekIP(),orgIP(cekIP()),y,z,alamat]);
+}
